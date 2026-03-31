@@ -68,16 +68,16 @@ You can install Postman via this website: https://www.postman.com/downloads/
     -   [x] Commit: `Implement list_all_as_string function in Notification repository.`
     -   [x] Write answers of your learning module's "Reflection Subscriber-1" questions in this README.
 -   **STAGE 3: Implement services and controllers**
-    -   [ ] Commit: `Create Notification service struct skeleton.`
-    -   [ ] Commit: `Implement subscribe function in Notification service.`
-    -   [ ] Commit: `Implement subscribe function in Notification controller.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification service.`
-    -   [ ] Commit: `Implement unsubscribe function in Notification controller.`
-    -   [ ] Commit: `Implement receive_notification function in Notification service.`
-    -   [ ] Commit: `Implement receive function in Notification controller.`
-    -   [ ] Commit: `Implement list_messages function in Notification service.`
-    -   [ ] Commit: `Implement list function in Notification controller.`
-    -   [ ] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
+    -   [x] Commit: `Create Notification service struct skeleton.`
+    -   [x] Commit: `Implement subscribe function in Notification service.`
+    -   [x] Commit: `Implement subscribe function in Notification controller.`
+    -   [x] Commit: `Implement unsubscribe function in Notification service.`
+    -   [x] Commit: `Implement unsubscribe function in Notification controller.`
+    -   [x] Commit: `Implement receive_notification function in Notification service.`
+    -   [x] Commit: `Implement receive function in Notification controller.`
+    -   [x] Commit: `Implement list_messages function in Notification service.`
+    -   [x] Commit: `Implement list function in Notification controller.`
+    -   [x] Write answers of your learning module's "Reflection Subscriber-2" questions in this README.
 
 ## Your Reflections
 This is the place for you to write reflections:
@@ -95,3 +95,9 @@ This is the place for you to write reflections:
     `lazy_static` dipakai karena data seperti `Vec` dan `DashMap` tidak bisa langsung diinisialisasi sebagai `static` biasa dengan cara yang fleksibel seperti di Java. Rust hanya mengizinkan `static` biasa untuk nilai yang benar-benar aman diinisialisasi secara tetap. Sementara itu, `Vec`, `DashMap`, dan struktur sinkronisasi butuh proses inisialisasi runtime. Jadi, `lazy_static` membantu membuat variabel global yang baru dibuat saat pertama kali dipakai, tetapi tetap aman dan sesuai aturan Rust.
 
 #### Reflection Subscriber-2
+
+1. Saya belajar bahwa `lib.rs` berisi fondasi bersama untuk aplikasi ini. Ada `APP_CONFIG` untuk membaca configuration seperti URL instance receiver, URL publisher, dan nama instance. Saya juga belajar bahwa ada `REQWEST_CLIENT` yang dipakai sebagai HTTP client global, sehingga service tidak perlu membuat client baru terus-menerus. Selain itu, ada `Result`, `Error`, dan `compose_error_response()` yang membuat penanganan error menjadi lebih rapi dan konsisten. Dari situ saya jadi lebih paham bahwa file ini penting karena menjadi tempat utility yang dipakai oleh banyak bagian aplikasi.
+
+2. Observer pattern memudahkan untuk menambahkan subscriber baru karena publisher tidak perlu tahu detail implementasi setiap receiver. Selama subscriber mendaftarkan dirinya ke product type tertentu, publisher hanya perlu menyimpan data subscriber lalu mengirim notification saat ada perubahan yang relevan. Artinya, menambah receiver baru cukup mudah: jalankan instance baru, lakukan subscribe, lalu instance itu langsung bisa ikut menerima update. Namun, kalau yang ditambah adalah lebih dari satu instance Main app, situasinya jadi tidak sesimpel itu. Setiap Main app bisa saja punya data subscriber yang berbeda-beda kalau tidak memakai penyimpanan bersama. Jadi, menambah banyak subscriber masih mudah, tetapi menambah banyak publisher atau Main app biasanya butuh sinkronisasi data yang lebih rapi, misalnya database bersama atau mekanisme koordinasi lain.
+
+3. Untuk saat ini, saya belum membuat test sendiri, tetapi saya mencoba menggunakan Postman untuk membantu pengujian manual. Menurut saya, Postman sangat berguna karena memudahkan saya mengirim request subscribe, unsubscribe, receive, dan list tanpa harus menulis program tambahan. Dengan Postman, saya juga lebih mudah melihat response JSON dan memastikan apakah notification benar-benar masuk ke receiver yang benar. Saya belum menambahkan dokumentasi Postman collection, tetapi kalau itu dilakukan, menurut saya akan sangat membantu untuk kerja kelompok karena semua anggota bisa memakai request yang sama dengan lebih konsisten.
